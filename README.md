@@ -1,19 +1,19 @@
 <div align="center">
 
-# Scribo — Next-Gen Digital Ledger & Credit Operating System
+# Scribo — Digital Ledger & Credit Operating System
 
 **A modern, cross-platform digital ledger ecosystem uniting React 18, Vite, Tailwind CSS, Firebase Firestore, and Capacitor to modernize credit (Udhar) tracking, automated PDF billing, and real-time customer balances.**
 
-[![Live Web App](https://img.shields.io/badge/Live_Demo-sscribo.vercel.app-22c55e.svg?logo=vercel&logoColor=white)](https://sscribo.vercel.app/)
 [![React](https://img.shields.io/badge/React-18.3.1-61DAFB.svg?logo=react&logoColor=black)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-8.0-646C9A.svg?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4.svg?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Firebase](https://img.shields.io/badge/Firebase-Firestore_12-FFCA28.svg?logo=firebase&logoColor=black)](https://firebase.google.com/)
 [![Capacitor](https://img.shields.io/badge/Capacitor-8.3-119EFF.svg?logo=capacitor&logoColor=white)](https://capacitorjs.com/)
 [![Android](https://img.shields.io/badge/Android-APK_Build-3DDC84.svg?logo=android&logoColor=white)](https://developer.android.com/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ### 🌐 Live Web Application: https://sscribo.vercel.app/
+
+### 📱 Android Application: https://mega.nz/file/yQcDzKDQ#bWdNT267zJquN1b_uHXCfMqprz-awNt0fupewes-SQQ
 
 </div>
 
@@ -21,12 +21,12 @@
 
 ## What it is
 
-In rural commerce, agricultural trade, and neighborhood retail, billions of dollars in daily commerce still rely on informal paper credit (*"Khata"*). Handwritten ledgers inevitably suffer from arithmetic discrepancies, misplaced receipts, uncollected receivables, and zero visibility for customers and farmers who often have no reliable way to verify their running balance until harvesting season ends.
+In small scale retail bussinesses, billions of dollars in daily commerce still rely on informal paper credit (*"Khata"*). Handwritten ledgers inevitably suffer from arithmetic discrepancies, misplaced receipts, uncollected receivables, and zero visibility for customers and farmers who often have no reliable way to verify their running balance until harvesting season ends.
 
 **Scribo** replaces paper books with an immutable, synchronized, mobile-first ledger operating system. Built with a dual-portal architecture, Scribo provides:
 
-1. **The Shopkeeper OS**: A rapid point-of-sale workflow for logging transactions, monitoring credit (Udhar) vs. cash collections, tracking overdue debt aging, calculating customer creditworthiness, and issuing automated invoices.
-2. **The Farmer & Customer Portal**: A lightweight, real-time portal where customers verify their live balance, inspect line-item transaction histories, download branded receipts, and settle balances.
+1. **The Admin Dashboard**: A rapid point-of-sale workflow for logging transactions, monitoring credit (Udhar) vs. cash collections, tracking overdue debt aging, calculating customer creditworthiness, and issuing automated invoices.
+2. **Customer Portal**: A lightweight, real-time portal where customers verify their live balance, inspect line-item transaction histories, download branded receipts, and settle balances.
 
 The platform bridges high-performance web engineering with native mobile capabilities: running as an ultra-fast Progressive Web App (PWA) in the browser and as a native Android APK compiled through Capacitor with hardware notifications and native Google Authentication.
 
@@ -35,12 +35,12 @@ The platform bridges high-performance web engineering with native mobile capabil
 ## Features
 
 - **Dual-Portal Role Architecture** — Clear boundary isolation between merchant administrative operations and customer ledger inspection with PIN-gated merchant access and mobile-verified customer access.
-- **Real-Time Credit (Udhar) Engine** — Sub-second ledger balancing that tracks credit advances, partial settlements, direct cash purchases, and running debt totals without database lock contention.
+- **Real-Time Credit System** — Sub-second ledger balancing that tracks credit advances, partial settlements, direct cash purchases, and running debt totals without database lock contention.
 - **Client-Side PDF Receipt Generator** — On-the-fly generation of styled, itemized invoice receipts rendered client-side using `jsPDF` within ~40ms.
 - **Direct WhatsApp Ledger Bot & Sharing** — Automated composition of WhatsApp messages with customer details and deep links to send instant receipts directly to the customer's phone number without third-party messaging costs.
 - **Dynamic Credit Scoring & Seasonal Analysis** — Algorithmic assessment of customer repayment turnaround times and seasonal financial health across Indian crop cycles (Kharif, Rabi, and Zaid).
 - **Zero-Cost Cloudflare FCM Push Relay** — Serverless edge worker on Cloudflare that generates signed Google OAuth tokens to trigger Firebase Cloud Messaging (FCM) v1 alerts on Spark (free) tiers.
-- **Offline-First PWA & Native Android** — Service worker caching via Workbox for offline operational reliability alongside a production-ready Capacitor Android Studio container.
+- **Offline PWA & Native Android** — Service worker caching via Workbox for offline operational reliability alongside a production-ready Capacitor Android Studio container.
 
 ---
 
@@ -52,7 +52,7 @@ For developers and beginners exploring this repository, Scribo maintains a stric
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        SCRIBO PLATFORM LAYERS                         │
 ├──────────────────────────────────┬─────────────────────────────────────┤
-│        🌐 WEB APPLICATION        │         🤖 ANDROID APPLICATION      │
+│        🌐 WEB APPLICATION        │         📱 ANDROID APPLICATION      │
 │     (Browser & PWA Clients)      │      (Native Android Studio APK)    │
 ├──────────────────────────────────┼─────────────────────────────────────┤
 │ • Codebase: `src/`               │ • Codebase: `android/`              │
@@ -81,7 +81,8 @@ A complete, standalone Android Studio project. It does not reinvent the UI; inst
 
 ---
 
-## How the Ledger Engine Works (From Scratch to Advanced)
+
+## How the Ledger System Works
 
 To understand how Scribo maintains accurate financial state across distributed web and mobile clients, here is the lifecycle of a transaction from input to ledger reconciliation:
 
@@ -111,8 +112,9 @@ To understand how Scribo maintains accurate financial state across distributed w
 
 ### 1. Dual-Role Authentication & Access Control
 Scribo protects merchant data while making customer accounts frictionless:
-- **Shopkeeper Authentication**: Uses Firebase Email/Password or Google OAuth, coupled with a server-validated security PIN. Only authenticated merchants with verified emails matching `settings/shop.ownerEmail` possess full write and delete permissions over the store's records.
-- **Customer / Farmer Authentication**: Customers log in via Google or Email and provide their registered 10-digit mobile number. Scribo's security logic performs a reverse lookup (`mobile_lookup` & `email_lookup`), linking their login identity (`authUid`) to the merchant's customer record without exposing other customers' data.
+- **Admin Authentication**: Uses Firebase Email/Password or Google OAuth, coupled with a server-validated security PIN. Only authenticated merchants with verified emails matching `settings/shop.ownerEmail` possess full write and delete permissions over the store's records.
+- **Customer Authentication**: Customers log in via Google or Email and provide their registered 10-digit mobile number. Scribo's security logic performs a reverse lookup (`mobile_lookup` & `email_lookup`), linking their login identity (`authUid`) to the merchant's customer record without exposing other customers' data.
+
 
 ### 2. Balance & Financial Invariant Formulas
 Every transaction computes running financial invariants:
@@ -126,6 +128,7 @@ $$\text{Customer Total Outstanding} = \sum \text{Remaining Dues of Pending Trans
 When a repayment or dues clearance is recorded:
 $$\text{New Outstanding} = \max(0, \, \text{Previous Outstanding} - \text{Settled Amount})$$
 
+
 ### 3. Credit Scoring & Risk Heuristic
 Scribo calculates a dynamic credit score (from 300 to 900) for every customer based on repayment frequency and debt aging:
 
@@ -135,6 +138,7 @@ $$\text{Repayment Ratio} = \frac{\text{Total Amount Repaid}}{\max(1, \text{Total
 
 Customers with a high repayment ratio and low average turnaround days receive top tier scores ($>750$) and higher automated credit limit suggestions.
 
+
 ### 4. Client-Side PDF Synthesis Pipeline
 Rather than relying on resource-intensive backend PDF rendering engines, Scribo renders itemized invoices directly in the browser's JavaScript runtime:
 1. `jsPDF` creates an in-memory vector canvas conforming to standardized A4 invoice typography.
@@ -142,6 +146,7 @@ Rather than relying on resource-intensive backend PDF rendering engines, Scribo 
 3. The generated array buffer is converted to a local Blob and shared natively via the Web Share API or provided via a direct download link.
 
 ---
+
 
 ## System Metrics & Performance
 
@@ -303,13 +308,11 @@ Scribo/
    adb install -r app/build/outputs/apk/debug/app-debug.apk
    ```
 
-*For complete step-by-step guidance on signing and release keys, see [`docs/ANDROID_SETUP.md`](docs/ANDROID_SETUP.md).*
-
 ---
 
 ## Cloudflare Push Relay (Zero-Cost Push Notifications)
 
-Because Google Firebase Cloud Functions require a paid Blaze plan to call external networks or FCM APIs, Scribo provides an open-source serverless relay in `cloudflare-push-relay-worker.js`.
+- Scribo provides an open-source serverless relay in `cloudflare-push-relay-worker.js`.
 
 Deployable on **Cloudflare Workers** (free up to 100,000 requests/day):
 1. Create a Cloudflare Worker and paste `cloudflare-push-relay-worker.js`.
@@ -320,6 +323,7 @@ Deployable on **Cloudflare Workers** (free up to 100,000 requests/day):
 3. Add the worker URL to your `.env` as `VITE_PUSH_RELAY_URL`.
 
 ---
+
 
 ## Database Architecture & Security Model
 
@@ -334,7 +338,6 @@ Scribo structures data around six core collections:
 | `mobile_lookup`| Read: Authenticated / Write: Strict validation | Links phone numbers to customer account UIDs |
 | `pushTokens`   | Read: Owner / Write: Owner | Stores active FCM device registration tokens for push routing |
 
-*Production security rules are fully declared in [`firestore.rules`](firestore.rules) and indexes in [`firestore.indexes.json`](firestore.indexes.json).*
 
 ---
 

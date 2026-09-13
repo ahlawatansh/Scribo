@@ -11,9 +11,10 @@
 [![Capacitor](https://img.shields.io/badge/Capacitor-8.3-119EFF.svg?logo=capacitor&logoColor=white)](https://capacitorjs.com/)
 [![Android](https://img.shields.io/badge/Android-APK_Build-3DDC84.svg?logo=android&logoColor=white)](https://developer.android.com/)
 
-### 🌐 Live Web Application: https://sscribo.vercel.app/
-
-### 📱 Android Application: https://mega.nz/file/yQcDzKDQ#bWdNT267zJquN1b_uHXCfMqprz-awNt0fupewes-SQQ
+<span>
+<a href="https://mega.nz/file/yQcDzKDQ#bWdNT267zJquN1b_uHXCfMqprz-awNt0fupewes-SQQ">Android Application</a>
+<a href="https://sscribo.vercel.app/">Live Web Application</a>
+</span>
 
 </div>
 
@@ -21,7 +22,7 @@
 
 ## What it is
 
-In small scale retail bussinesses, billions of dollars in daily commerce still rely on informal paper credit (*"Khata"*). Handwritten ledgers inevitably suffer from arithmetic discrepancies, misplaced receipts, uncollected receivables, and zero visibility for customers and farmers who often have no reliable way to verify their running balance until harvesting season ends.
+In small scale retail bussinesses, billions of dollars in daily commerce still rely on informal paper credit (*"Khata"*). Handwritten ledgers inevitably suffer from arithmetic discrepancies, misplaced receipts, uncollected receivables.
 
 **Scribo** replaces paper books with an immutable, synchronized, mobile-first ledger operating system. Built with a dual-portal architecture, Scribo provides:
 

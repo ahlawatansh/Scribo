@@ -1,4 +1,4 @@
-# KisanKhata — Free Firebase setup (no terminal)
+# Scribo — Free Firebase Setup Guide
 
 Project: **shyam-agricultural-store**
 

@@ -1,6 +1,6 @@
-# Free Capacitor Android APK Guide
+# Scribo — Capacitor Android APK Guide
 
-This replaces the Median APK path. It keeps the same React/Vite/Firebase web app, but builds a real Android app locally with Capacitor.
+This guide walks through configuring, building, and installing the native Scribo Android APK using Capacitor and Android Studio.
 
 ## What is free
 

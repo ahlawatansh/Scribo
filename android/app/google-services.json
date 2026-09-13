@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "605263824637",
+    "project_id": "shyam-agricultural-store",
+    "storage_bucket": "shyam-agricultural-store.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605263824637:android:4b1299d8cfbda220122094",
+        "android_client_info": {
+          "package_name": "com.shyam.agriculturalstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605263824637-ofdf06bqi3lg0o0a5re14ggq96q350v4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shyam.agriculturalstore",
+            "certificate_hash": "58151198f41df2ae1470e0649353a0ea90b67fe2"
+          }
+        },
+        {
+          "client_id": "605263824637-5ijbfmoiiuuij4ngnppqh730vjhklplc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAN36ot71xW1XVfiNBzTw9vMYaBHyRVPWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605263824637-5ijbfmoiiuuij4ngnppqh730vjhklplc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

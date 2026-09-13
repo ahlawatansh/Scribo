@@ -1,0 +1,14 @@
+{
+  "name": "Scribo",
+  "short_name": "Scribo",
+  "description": "Your Trusted Business Partner",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7f9fb",
+  "theme_color": "#006d36",
+  "icons": [
+    { "src": "/websitelogo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/websitelogo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

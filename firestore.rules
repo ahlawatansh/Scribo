@@ -1,0 +1,183 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function shopOwnerEmail() {
+      return get(/databases/$(database)/documents/settings/shop).data.ownerEmail;
+    }
+
+    function isShop() {
+      return isSignedIn() && request.auth.token.email == shopOwnerEmail();
+    }
+
+    function farmerDoc(farmerId) {
+      return get(/databases/$(database)/documents/farmers/$(farmerId)).data;
+    }
+
+    function isFarmerOwner(farmerId) {
+      return isSignedIn() && farmerDoc(farmerId).get('authUid', null) == request.auth.uid;
+    }
+
+    function isFarmerOwnerByEmail(farmerId) {
+      return isSignedIn()
+        && request.auth.token.email != null
+        && farmerDoc(farmerId).get('authEmail', null) == request.auth.token.email.lower();
+    }
+
+    function isFarmerOwnerOrEmail(farmerId) {
+      return isFarmerOwner(farmerId) || isFarmerOwnerByEmail(farmerId);
+    }
+
+    function isSelfLookup() {
+      return isSignedIn()
+        && request.resource.data.get('authUid', null) == request.auth.uid;
+    }
+
+    function lookupKeysAreSafe() {
+      return request.resource.data.keys().hasOnly([
+        'mobile',
+        'farmerId',
+        'authUid',
+        'authEmail',
+        'linkedEmail',
+        'updatedAt'
+      ]);
+    }
+
+    function canClaimFarmer(farmerId) {
+      return isSignedIn()
+        && farmerDoc(farmerId).get('authUid', null) == null
+        && request.resource.data.authUid == request.auth.uid;
+    }
+
+    match /settings/shop {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+    match /settings/{otherId} {
+      allow read, write: if isShop();
+    }
+
+    match /farmers/{farmerId} {
+      allow read: if isShop() || (isSignedIn() && (
+        resource.data.get('authUid', null) == request.auth.uid ||
+        (resource.data.get('authEmail', null) != null
+          && request.auth.token.email != null
+          && resource.data.authEmail == request.auth.token.email.lower())
+      ));
+
+      allow create: if isShop() || (
+        isSignedIn()
+        && request.resource.data.authUid == request.auth.uid
+      );
+
+      allow update: if isShop() || canClaimFarmer(farmerId) || (
+        isSignedIn()
+        && resource.data.get('authUid', null) == request.auth.uid
+        && request.resource.data.authUid == request.auth.uid
+      );
+
+      allow delete: if isShop();
+    }
+
+    match /mobile_lookup/{mobile} {
+      allow get: if isSignedIn();
+      allow list: if isShop() || (
+        isSignedIn()
+        && resource.data.get('authUid', null) == request.auth.uid
+      );
+      allow create: if isShop() || (
+        isSelfLookup()
+        && lookupKeysAreSafe()
+        && request.resource.data.mobile == mobile
+      );
+      allow update: if isShop() || (
+        isSelfLookup()
+        && lookupKeysAreSafe()
+        && resource.data.mobile == mobile
+        && request.resource.data.mobile == resource.data.mobile
+        && (!('farmerId' in resource.data) || request.resource.data.farmerId == resource.data.farmerId)
+        && (!('authUid' in resource.data) || resource.data.authUid == null || resource.data.authUid == request.auth.uid)
+      );
+      allow delete: if isShop();
+    }
+
+    match /email_lookup/{email} {
+      allow get: if isShop() || (
+        isSignedIn()
+        && request.auth.token.email != null
+        && email == request.auth.token.email.lower()
+      );
+      allow list: if isShop() || (
+        isSignedIn()
+        && resource.data.get('authUid', null) == request.auth.uid
+      );
+      allow create: if isShop() || (
+        isSignedIn()
+        && request.auth.token.email != null
+        && email == request.auth.token.email.lower()
+        && request.resource.data.authUid == request.auth.uid
+      );
+      allow update: if isShop() || (
+        isSignedIn()
+        && request.auth.token.email != null
+        && email == request.auth.token.email.lower()
+        && request.resource.data.authUid == request.auth.uid
+      );
+      allow delete: if isShop();
+    }
+
+    match /transactions/{txnId} {
+      allow read: if isShop() || (
+        isSignedIn() && isFarmerOwnerOrEmail(resource.data.farmerId)
+      );
+      allow create, delete: if isShop();
+      allow update: if isShop() || (isFarmerOwnerOrEmail(resource.data.farmerId)
+        && request.resource.data.farmerId == resource.data.farmerId
+        && request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['status', 'remainingAmount', 'clearedAt']));
+    }
+
+    match /payments/{paymentId} {
+      allow read, write: if isShop();
+    }
+
+    match /notifications/{notificationId} {
+      allow read: if isShop() || (
+        isSignedIn()
+        && resource.data.get('farmerId', null) != null
+        && isFarmerOwnerOrEmail(resource.data.farmerId)
+      );
+      allow update, delete: if isShop();
+      allow create: if isShop() || (
+        isSignedIn()
+        && request.resource.data.get('farmerId', null) != null
+        && isFarmerOwnerOrEmail(request.resource.data.farmerId)
+        && request.resource.data.diff({}).affectedKeys().hasOnly([
+          'type',
+          'title',
+          'message',
+          'customerTitle',
+          'customerMessage',
+          'amount',
+          'farmerId',
+          'farmerName',
+          'createdAt',
+          'read'
+        ])
+      );
+    }
+
+    match /pushTokens/{tokenId} {
+      allow create, update: if isSignedIn()
+        && request.resource.data.uid == request.auth.uid;
+      allow read, delete: if isShop() || (
+        isSignedIn() && resource.data.uid == request.auth.uid
+      );
+    }
+  }
+}

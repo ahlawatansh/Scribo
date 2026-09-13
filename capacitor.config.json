@@ -1,0 +1,12 @@
+{
+  "appId": "com.shyam.agriculturalstore",
+  "appName": "Scribo",
+  "webDir": "dist",
+  "icon": "websitelogo.png",
+  "plugins": {
+    "FirebaseAuthentication": {
+      "providers": ["google.com"],
+      "skipNativeAuth": false
+    }
+  }
+}

@@ -13,6 +13,7 @@
 
 <span>
 <a href="https://mega.nz/file/yQcDzKDQ#bWdNT267zJquN1b_uHXCfMqprz-awNt0fupewes-SQQ">Android Application</a>
+&nbsp;&nbsp;&nbsp;&nbsp;
 <a href="https://sscribo.vercel.app/">Live Web Application</a>
 </span>
 
